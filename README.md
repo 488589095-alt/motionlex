@@ -32,4 +32,8 @@
 
 词条选择参考 [MDN 的滚动驱动动画说明](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll-driven_animations)、[CSS Scroll Snap](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll_snap)、[View Transition API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API)、[W3C WAI-ARIA 交互模式](https://www.w3.org/WAI/ARIA/apg/patterns/) 和 [Motion 文档](https://motion.dev/docs)。参考站点 [VibeHub](https://vibe-hub.org/) 与 [Oil](https://www.oiloil.org/) 用于理解信息呈现和用户偏好的色彩气质；本站的界面、文案、分类和示例代码独立编写。
 
-当前为本地版本，尚未发布公开网址。上线时需要先安装独立依赖并运行生产构建，随后把公开网址配置给作品集。
+## 部署到 Vercel
+
+将本仓库导入 Vercel，框架选择 Next.js。项目使用 `npm ci` 安装依赖，执行 `npm run build` 生成生产版本。根域名 `motionlex.online` 在 Vercel 项目的 Domains 中添加后，按照 Vercel 实际显示的 DNS 记录在阿里云解析控制台设置。
+
+如需启用 DeepSeek 意图搜索，在 Vercel 项目的环境变量中设置 `DEEPSEEK_API_KEY`，然后重新部署。不要把密钥提交到 GitHub。未配置时，页面仍提供本地意图匹配。浏览器原生语音识别不需要服务端密钥。
