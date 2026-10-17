@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import Link from 'next/link';
 import { MotionDemo } from '../components/motion-demo';
-import { MotionControl } from '../components/motion-control';
 import { SiteLogo } from '../components/site-logo';
 import { motionTerms } from '../data/terms';
 import { familyFor, termFamilies, type Pillar } from '../data/taxonomy';
@@ -167,7 +166,7 @@ export default function Home() {
 
   return <main>
     <a className="skip-link" href="#explore">跳到术语目录</a>
-    <header className="site-header"><Link href="/" className="brand"><SiteLogo small /><span>MotionLex<small>会动的网页术语书</small></span></Link><nav aria-label="主导航"><a href="#explore">去探索 <span>↗</span></a><a href="#how">怎么用</a><MotionControl /></nav></header>
+    <header className="site-header"><Link href="/" className="brand"><SiteLogo small /><span>MotionLex<small>会动的网页术语书</small></span></Link><nav aria-label="主导航"><a href="#explore">去探索 <span>↗</span></a><a href="#how">怎么用</a></nav></header>
 
     <section className="hero" aria-labelledby="hero-title"><div className="hero-copy"><span className="eyebrow">给正在和 AI 一起做网页的人 ✳</span><h1 id="hero-title">那个效果，<br /><em>原来叫这个！</em></h1><p>先看它怎么动，再知道它叫什么。把准确的描述和验收标准复制给 AI，让网页更接近你脑海里的样子。</p><a className="hero-cta" href="#explore">开始找灵感 <span>↘</span></a><div className="hero-count"><b>{motionTerms.length}</b><span>个动效与交互术语<br />分成 {termFamilies.length} 个细分选项</span></div></div><div className="hero-art" aria-hidden="true"><div className="art-orbit art-orbit-one"/><div className="art-orbit art-orbit-two"/><span className="art-sticker art-sticker-top">看得见<br />才说得清 ♡</span><div className="art-window"><div className="art-window-bar"><i/><i/><i/><b>little interaction lab</b></div><div className="art-window-stage"><span className="art-dot dot-one"/><span className="art-dot dot-two"/><span className="art-dot dot-three"/><b>hover me!</b><i className="art-cursor">↖</i></div></div><span className="art-star star-one">✳</span><span className="art-star star-two">✦</span><span className="art-sticker art-sticker-bottom">从感觉 → 到实现</span></div></section>
 
