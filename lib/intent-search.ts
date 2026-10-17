@@ -30,6 +30,17 @@ const intentRules: { pattern: RegExp; slugs: string[]; reason: string; weight?: 
   { pattern: /上传.*进度|传了多少|文件.*百分比/, slugs: ['upload-progress'], reason: '上传过程需要显示实际进度' },
   { pattern: /空状态|没有内容|没有结果/, slugs: ['empty-state'], reason: '内容为空时提供说明和下一步' },
   { pattern: /排序.*动画|排序.*移动|重排/, slugs: ['sort-transition', 'list-insert'], reason: '列表顺序或内容发生变化' },
+  { pattern: /卡片.*叠|一层层叠|重叠.*滚|越滑越叠/, slugs: ['stacking-cards'], reason: '卡片随滚动逐张叠放' },
+  { pattern: /像翻书|翻页|卷起来|卷页/, slugs: ['page-curl', 'cube-transition'], reason: '画面像实体页面一样翻转' },
+  { pattern: /幕布|拉开.*画面|遮住.*揭开/, slugs: ['curtain-reveal', 'circle-reveal'], reason: '用遮挡层揭示新画面' },
+  { pattern: /开关|切换开关|打开.*关闭|白天.*黑夜|日夜/, slugs: ['toggle-switch', 'theme-toggle'], reason: '控件在两个状态之间切换' },
+  { pattern: /星级|打分|评分|几颗星/, slugs: ['star-rating'], reason: '选择并显示评分等级' },
+  { pattern: /长按|按住.*确认|按住.*删除/, slugs: ['hold-to-confirm'], reason: '按住达到时长后才确认操作' },
+  { pattern: /边输入.*候选|输入.*选项|下拉.*搜索/, slugs: ['combobox', 'search-suggest'], reason: '输入时从候选中选择' },
+  { pattern: /底部.*下拉|往下拉.*关闭|拖.*弹层/, slugs: ['drag-dismiss-sheet'], reason: '下拉手势关闭底部弹层' },
+  { pattern: /极光|流光|波纹|粒子|星空|背景.*动/, slugs: ['aurora', 'ambient-ripples', 'particle-constellation', 'starfield'], reason: '背景中的持续视觉动效' },
+  { pattern: /文字.*逐个|一个词.*出现|字.*写出来|字.*填色/, slugs: ['word-by-word-reveal', 'handwriting-draw', 'text-fill-on-scroll'], reason: '文字按阅读顺序逐步显现' },
+  { pattern: /曲线.*画|图表.*长出来|折线.*出现/, slugs: ['chart-line-draw'], reason: '图表线条沿数据路径画出' },
 ];
 
 function grams(value: string) {

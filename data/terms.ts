@@ -1,6 +1,7 @@
 import { extraTerms } from './extra-terms';
 import { expandedTerms } from './expanded-terms';
 import { moreTerms } from './more-terms';
+import { researchedTerms } from './researched-terms';
 import { familyFor, termFamilies } from './taxonomy';
 
 export type MotionCategory = '滚动叙事' | '时间与节奏' | '指针交互' | '状态反馈';
@@ -191,6 +192,7 @@ const authoredTerms: MotionTerm[] = [
   ...extraTerms,
   ...expandedTerms,
   ...moreTerms,
+  ...researchedTerms,
 ];
 
 const termBySlug = new Map(authoredTerms.map((term) => [term.slug, term]));

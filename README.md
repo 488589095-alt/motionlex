@@ -20,17 +20,17 @@
 
 ## 内容结构
 
-- `data/terms.ts`、`data/extra-terms.ts`、`data/expanded-terms.ts`、`data/more-terms.ts`：180 个词条的名称、场景、AI 提示词与验收要点。
+- `data/terms.ts`、`data/extra-terms.ts`、`data/expanded-terms.ts`、`data/more-terms.ts`、`data/researched-terms.ts`：300 个词条的名称、场景、AI 提示词与验收要点。
 - `data/taxonomy.ts`：按触发方式和使用目标组织为 12 个章节，每个词条只归入一个主章节。
 - `lib/intent-search.ts` 与 `app/api/intent-search/route.ts`：本地意图匹配与服务端 AI 检索；结果只允许目录中已有的术语。
 - `app/api/transcribe/route.ts`：浏览器语音识别不可用时的服务端录音转写入口。
-- `components/motion-demo.tsx`、`components/more-motion-demo.tsx`、`app/more-demos.css`：按术语映射的浏览器内动态示意；不依赖 GIF 或外部视频。
+- `components/motion-demo.tsx`、`components/more-motion-demo.tsx`、`components/researched-motion-demo.tsx`、`app/more-demos.css`、`app/researched-demos.css`：按术语映射的浏览器内循环示意；不依赖 GIF 或外部视频。
 - `app/page.tsx`：搜索、筛选与卡片目录。
 - `app/terms/[slug]/page.tsx`：独立词条页和 Markdown 复制入口。
 
 ## 调研依据
 
-词条选择参考 [MDN 的滚动驱动动画说明](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll-driven_animations)、[CSS Scroll Snap](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll_snap)、[View Transition API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API)、[W3C WAI-ARIA 交互模式](https://www.w3.org/WAI/ARIA/apg/patterns/) 和 [Motion 文档](https://motion.dev/docs)。参考站点 [VibeHub](https://vibe-hub.org/) 与 [Oil](https://www.oiloil.org/) 用于理解信息呈现和用户偏好的色彩气质；本站的界面、文案、分类和示例代码独立编写。
+词条选择参考 [MDN 的滚动驱动动画说明](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll-driven_animations)、[CSS Scroll Snap](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll_snap)、[View Transition API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API)、[W3C WAI-ARIA 交互模式](https://www.w3.org/WAI/ARIA/apg/patterns/)、[Motion 文档及示例](https://motion.dev/examples)，以及 GitHub 上的 [Animation Handbook](https://github.com/matinmonshizadeh/animation-handbook) 和 [Free GSAP Effects](https://github.com/jaydickinson/free-gsap-effects)。按用户能否观察到不同的结果去重；同一效果的库实现、仅更换速度或颜色的变体不单列。本站的词条说明、提示词、界面与演示代码独立编写。参考站点 [VibeHub](https://vibe-hub.org/) 与 [Oil](https://www.oiloil.org/) 用于理解信息呈现和色彩气质。
 
 ## 部署到 Vercel
 
