@@ -20,6 +20,16 @@ const intentRules: { pattern: RegExp; slugs: string[]; reason: string; weight?: 
   { pattern: /加载|等待|还没出来|占位/, slugs: ['skeleton-loading', 'spinner', 'shimmer'], reason: '内容加载过程中的状态反馈' },
   { pattern: /输入.*建议|打字.*提示|搜索.*推荐/, slugs: ['search-suggest', 'live-filter'], reason: '输入时即时给出建议或结果' },
   { pattern: /数字.*增长|从零.*数字|数字.*跳/, slugs: ['count-up'], reason: '数值由起点连续增长' },
+  { pattern: /越滑越清楚|滑动.*透明|滚动.*透明/, slugs: ['scroll-opacity', 'scroll-blur'], reason: '视觉变化与滚动位置连续对应' },
+  { pattern: /滑动.*放大|滚动.*缩放|往下滑.*拉近/, slugs: ['scroll-scale', 'ken-burns'], reason: '画面在阅读过程中逐渐放大' },
+  { pattern: /图片.*放大|悬停.*放大|鼠标.*拉近/, slugs: ['hover-zoom', 'zoom-transition'], reason: '图片在指针靠近或打开时放大' },
+  { pattern: /下划线.*长|链接.*划线/, slugs: ['hover-underline'], reason: '链接的下划线随悬停展开' },
+  { pattern: /勾选|点赞|喜欢|复制.*成功|已复制/, slugs: ['checkbox-check', 'like-burst', 'copy-feedback'], reason: '操作后在控件原位给出反馈' },
+  { pattern: /框选|圈选|批量选中/, slugs: ['drag-select'], reason: '拖出选择区域一次选中多个对象' },
+  { pattern: /自动保存|已保存|保存中/, slugs: ['save-indicator'], reason: '编辑内容的保存状态会变化' },
+  { pattern: /上传.*进度|传了多少|文件.*百分比/, slugs: ['upload-progress'], reason: '上传过程需要显示实际进度' },
+  { pattern: /空状态|没有内容|没有结果/, slugs: ['empty-state'], reason: '内容为空时提供说明和下一步' },
+  { pattern: /排序.*动画|排序.*移动|重排/, slugs: ['sort-transition', 'list-insert'], reason: '列表顺序或内容发生变化' },
 ];
 
 function grams(value: string) {

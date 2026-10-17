@@ -20,11 +20,11 @@
 
 ## 内容结构
 
-- `data/terms.ts`、`data/extra-terms.ts`、`data/expanded-terms.ts`：120 个词条的名称、场景、AI 提示词与验收要点。
+- `data/terms.ts`、`data/extra-terms.ts`、`data/expanded-terms.ts`、`data/more-terms.ts`：180 个词条的名称、场景、AI 提示词与验收要点。
 - `data/taxonomy.ts`：按触发方式和使用目标组织为 12 个章节，每个词条只归入一个主章节。
 - `lib/intent-search.ts` 与 `app/api/intent-search/route.ts`：本地意图匹配与服务端 AI 检索；结果只允许目录中已有的术语。
 - `app/api/transcribe/route.ts`：浏览器语音识别不可用时的服务端录音转写入口。
-- `components/motion-demo.tsx`：按术语映射的浏览器内动态示意；不依赖 GIF 或外部视频。
+- `components/motion-demo.tsx`、`components/more-motion-demo.tsx`、`app/more-demos.css`：按术语映射的浏览器内动态示意；不依赖 GIF 或外部视频。
 - `app/page.tsx`：搜索、筛选与卡片目录。
 - `app/terms/[slug]/page.tsx`：独立词条页和 Markdown 复制入口。
 

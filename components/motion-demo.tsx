@@ -1,8 +1,11 @@
 import type { ReactNode } from 'react';
 import { familyFor } from '../data/taxonomy';
 import { motionTerms } from '../data/terms';
+import { moreTerms } from '../data/more-terms';
+import { MoreMotionDemo } from './more-motion-demo';
 
 const titles = new Map(motionTerms.map((term) => [term.slug, term.title]));
+const moreSlugs = new Set(moreTerms.map((term) => term.slug));
 
 function Picture({ name }: { name: string }) {
   return <span className="demo-picture"><i /><b>{name}</b><em>✦</em></span>;
@@ -15,7 +18,7 @@ function Scene({ slug }: { slug: string }): ReactNode {
     case 'live-filter':
       return <div className="demo-live-filter"><div><b>全部</b><b>动效</b><b>交互</b></div><span/><span/><span/></div>;
     case 'count-up':
-      return <div className="demo-counter"><b>120</b><span>IDEAS FOUND ✳</span></div>;
+      return <div className="demo-counter"><b>{motionTerms.length}</b><span>IDEAS FOUND ✳</span></div>;
     case 'chart-entrance':
       return <div className="demo-chart"><i/><i/><i/><i/><i/><span>JAN &nbsp; FEB &nbsp; MAR &nbsp; APR &nbsp; MAY</span></div>;
     case 'scroll-linked':
@@ -127,6 +130,7 @@ function Scene({ slug }: { slug: string }): ReactNode {
     case 'backdrop-blur': case 'overscroll':
       return <div className="demo-blur"><Picture name="VIEW" /><span>SOFT GLASS</span></div>;
     default:
+      if (moreSlugs.has(slug)) return <MoreMotionDemo slug={slug} />;
       return <div className="demo-glow"><i /><span>✳</span><b>TRY THE EFFECT</b></div>;
   }
 }
