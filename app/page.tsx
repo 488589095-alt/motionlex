@@ -49,7 +49,10 @@ export default function Home() {
   const recorderRef = useRef<MediaRecorder | null>(null);
   const voiceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchRequestRef = useRef(0);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const footerRef = useRef<HTMLElement | null>(null);
   const [visibleCount, setVisibleCount] = useState(12);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
     const restore = () => {
@@ -166,6 +169,40 @@ export default function Home() {
   const reasonFor = (slug: string) => searchResult?.matches.find((item) => item.slug === slug)?.reason;
   const visibleTerms = matches.slice(0, visibleCount);
 
+  useEffect(() => {
+    const node = loadMoreRef.current;
+    if (!node || visibleCount >= matches.length) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      const loadOnScroll = () => {
+        if (node.getBoundingClientRect().top <= window.innerHeight + 700) {
+          setVisibleCount((count) => Math.min(count + 12, matches.length));
+        }
+      };
+      window.addEventListener('scroll', loadOnScroll, { passive: true });
+      return () => window.removeEventListener('scroll', loadOnScroll);
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      setVisibleCount((count) => Math.min(count + 12, matches.length));
+    }, { rootMargin: '700px 0px' });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [visibleCount, matches.length]);
+
+  useEffect(() => {
+    const footer = footerRef.current;
+    if (!footer) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      const checkEnd = () => setShowBackToTop(footer.getBoundingClientRect().top <= window.innerHeight + 240);
+      window.addEventListener('scroll', checkEnd, { passive: true });
+      return () => window.removeEventListener('scroll', checkEnd);
+    }
+    const observer = new IntersectionObserver(([entry]) => setShowBackToTop(entry.isIntersecting), { rootMargin: '0px 0px 240px 0px' });
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, []);
+
   return <main>
     <a className="skip-link" href="#explore">跳到术语目录</a>
     <header className="site-header"><Link href="/" className="brand"><SiteLogo small /><span>MotionLex<small>会动的网页术语书</small></span></Link><nav aria-label="主导航"><a href="#explore">去探索 <span>↗</span></a><a href="#how">怎么用</a></nav></header>
@@ -191,11 +228,12 @@ export default function Home() {
 
         <div className="results"><div className="results-head"><div><span>{familyId ? termFamilies.find((item) => item.id === familyId)?.english : filter === 'all' ? 'ALL THE LITTLE MOTIONS' : filters.find((item) => item.id === filter)?.label}</span><h3>{searchResult ? '这些术语可能是你要找的' : familyId ? termFamilies.find((item) => item.id === familyId)?.title : filter === 'all' ? '从这里开始逛逛' : `${filters.find((item) => item.id === filter)?.label}相关效果`}</h3></div><span role="status">{matches.length} 个效果 · 点击卡片看完整说明 ↗</span></div>
           {visibleTerms.length ? <div className="term-grid">{visibleTerms.map((term) => { const family = familyFor(term.slug); return <Link href={`/terms/${term.slug}`} className="term-card" key={term.slug}><MotionDemo slug={term.slug} /><div className="term-card-copy"><div><span>{family?.title ?? '动效'}</span><i>NO. {term.number}</i></div><h4>{term.title}<small>{term.english}</small></h4><p>{term.cue}</p>{reasonFor(term.slug) && <p className="match-reason"><Icon name="sparkle" size={13} />{reasonFor(term.slug)}</p>}<span className="term-card-arrow">↗</span></div></Link>; })}</div> : <div className="empty-results"><span>☁</span><h3>还没找到这个效果</h3><p>换个说法试试，或者调整上面的分类。</p><button type="button" onClick={() => { clearSearch(); setFilter('all'); setFamilyId(null); setVisibleCount(12); syncUrl('all', null); }}>查看全部术语 ↗</button></div>}
-          {visibleCount < matches.length && <button className="load-more" type="button" onClick={() => setVisibleCount((count) => count + 12)}>再看 12 个效果 <span>↓</span></button>}
+          {visibleCount < matches.length && <div className="scroll-sentinel" ref={loadMoreRef} aria-hidden="true" />}
         </div></div></section>
 
     <section className="how" id="how"><span className="eyebrow">HOW IT WORKS / 02</span><h2>说出来 · 看明白 · 做出来 <span>✳</span></h2><div className="how-steps"><div><b>01</b><strong>说出想法</strong><p>打字或语音，说出你想要的画面。</p></div><div><b>02</b><strong>看动态</strong><p>从候选卡片里看真实示意，确认是不是你想要的效果。</p></div><div><b>03</b><strong>复制给 AI</strong><p>点开术语，把实现要求和验收要点一起发给 AI，再按真实页面检查。</p></div></div></section>
 
-    <footer className="site-footer"><Link href="/" className="brand"><SiteLogo small /><span>MotionLex<small>会动的网页术语书</small></span></Link><span>© 2026 MOTIONLEX · MADE TO MAKE IDEAS CLEAR</span><a href="#hero-title">回到顶部 ↑</a></footer>
+    <footer className="site-footer" ref={footerRef}><Link href="/" className="brand"><SiteLogo small /><span>MotionLex<small>会动的网页术语书</small></span></Link><span>© 2026 MOTIONLEX · MADE TO MAKE IDEAS CLEAR</span></footer>
+    {showBackToTop && <a className="back-to-top-float" href="#hero-title" aria-label="回到顶部">回到顶部 <span aria-hidden="true">↑</span></a>}
   </main>;
 }
