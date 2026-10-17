@@ -53,7 +53,7 @@ export function SemanticMotionDemo({ slug }: { slug: string }): ReactNode {
     case 'hover-preview': return <div className="semantic-scene semantic-preview"><span>查看这个作品　↗</span><section><b>作品预览</b><i />点开前先看一眼</section></div>;
     case 'hover-card': return <div className="semantic-scene semantic-hover-card"><span>◉　认识设计师</span><section><b>设计师小雨</b><small>交互设计 · 查看主页 ↗</small></section></div>;
     case 'popover': return <div className="semantic-scene semantic-popover"><b>筛选　⌄</b><section><span>☑ 动效</span><span>□ 交互</span><span>□ 内容</span></section></div>;
-    case 'count-up': return <div className="semantic-scene semantic-count-up"><div>{[0, 24, 68, 120].map((number, index) => <span key={number} style={{ '--i': index } as CSSProperties}>{number}</span>)}</div><small>个动效与交互术语</small></div>;
+    case 'count-up': return <div className="semantic-scene semantic-count-up"><div>{[0, 48, 176, 324].map((number, index) => <span key={number} style={{ '--i': index } as CSSProperties}>{number}</span>)}</div><small>个动效与交互术语</small></div>;
     case 'text-scramble': return <div className="semantic-scene semantic-scramble"><span>MX??I!O?</span><span>MOTI0N?</span><span>MOTIONLEX</span></div>;
     case 'anchor-scroll': return <div className="semantic-scene semantic-anchor"><nav><span>01 概览</span><span>02 示例 ↓</span><span>03 做法</span></nav><div><b>02 示例</b><i /><i /><i /></div></div>;
     case 'cursor-follow': return <div className="semantic-scene semantic-cursor-follow"><b>↖</b><span>跟着你</span><small>光标先到，标签稍后跟上</small></div>;
