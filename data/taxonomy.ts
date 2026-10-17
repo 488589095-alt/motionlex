@@ -20,3 +20,12 @@ export const termFamilies: TermFamily[] = [
 
 const familyBySlug = new Map(termFamilies.flatMap((family) => family.slugs.map((slug) => [slug, family] as const)));
 export function familyFor(slug: string) { return familyBySlug.get(slug); }
+
+// A cross-chapter lens for spatial effects; primary chapter assignments stay intact.
+export const spatialTermSlugs = new Set([
+  'tilt-3d', 'cube-transition', 'layer-depth',
+  'scroll-portal-walk', 'scroll-3d-pose',
+  'cylindrical-carousel', 'fan-deck', 'spiral-slider', 'photo-stack',
+  'depth-carousel', 'orbit-gallery', 'particle-globe',
+  'isometric-block-field', 'image-tunnel',
+]);

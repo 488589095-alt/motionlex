@@ -5,21 +5,17 @@ import Link from 'next/link';
 import { MotionDemo } from '../components/motion-demo';
 import { SiteLogo } from '../components/site-logo';
 import { motionTerms } from '../data/terms';
-import { familyFor, termFamilies, type Pillar } from '../data/taxonomy';
+import { familyFor, spatialTermSlugs, termFamilies, type Pillar } from '../data/taxonomy';
 import type { IntentMatch } from '../lib/intent-search';
 
-type Filter = 'all' | Pillar;
+type Filter = 'all' | Pillar | '3d';
 const filters = [
   { id: 'all', label: '全部效果', icon: 'layers' },
   { id: 'scroll', label: '滚动', icon: 'scroll' },
   { id: 'animation', label: '动效', icon: 'waves' },
+  { id: '3d', label: '3D 与空间', icon: 'cube' },
   { id: 'interaction', label: '交互', icon: 'pointer' },
   { id: 'feedback', label: '内容与反馈', icon: 'book' },
-];
-const featuredEffects = [
-  { slug: 'scroll-portal-walk', label: '01 / 滚动', title: '往里走，换一幕', cue: '滚动时，镜头穿过画面中央的入口。' },
-  { slug: 'cylindrical-carousel', label: '02 / 3D', title: '卡片转成一个圈', cue: '几张卡片围成立体圆筒，依次来到眼前。' },
-  { slug: 'particle-globe', label: '03 / 视觉', title: '让点组成一颗星球', cue: '点阵缓慢自转，前后层次一眼可见。' },
 ];
 
 function Icon({ name, size = 18 }: { name: string; size?: number }) {
@@ -27,6 +23,7 @@ function Icon({ name, size = 18 }: { name: string; size?: number }) {
     layers: <><path d="m12 3-9 5 9 5 9-5-9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></>,
     scroll: <><path d="M8 3v18m0-18-3 3m3-3 3 3M16 21V3m0 18-3-3m3 3 3-3"/></>,
     waves: <><path d="M2 8c3-4 5 4 8 0s5 4 8 0 3-1 4 0M2 16c3-4 5 4 8 0s5 4 8 0 3-1 4 0"/></>,
+    cube: <><path d="m12 2 9 5v10l-9 5-9-5V7l9-5Z"/><path d="m3 7 9 5 9-5M12 12v10"/></>,
     pointer: <><path d="m5 3 14 9-6 1-3 6-5-16Z"/><path d="m13 13 4 7"/></>,
     book: <><path d="M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Zm0 0v14"/></>,
     sparkle: <><path d="m12 2 2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2L12 2Z"/></>,
@@ -61,7 +58,7 @@ export default function Home() {
       const nextFamily = params.get('chapter');
       const restoredFilter = filters.some((item) => item.id === nextFilter) ? nextFilter as Filter : 'all';
       setFilter(restoredFilter);
-      setFamilyId(termFamilies.some((item) => item.id === nextFamily && (restoredFilter === 'all' || item.pillar === restoredFilter)) ? nextFamily : null);
+      setFamilyId(termFamilies.some((item) => item.id === nextFamily && (restoredFilter === 'all' || (restoredFilter === '3d' ? item.slugs.some((slug) => spatialTermSlugs.has(slug)) : item.pillar === restoredFilter))) ? nextFamily : null);
       const restoredQuery = params.get('q') ?? '';
       setQuery(restoredQuery);
       if (restoredQuery.trim()) void runSearch(restoredQuery);
@@ -106,7 +103,7 @@ export default function Home() {
     const selected = searchResult ? new Set(searchResult.matches.map((item) => item.slug)) : null;
     return motionTerms.filter((term) => {
       const family = familyFor(term.slug);
-      if (filter !== 'all' && family?.pillar !== filter) return false;
+      if (filter === '3d' ? !spatialTermSlugs.has(term.slug) : filter !== 'all' && family?.pillar !== filter) return false;
       if (familyId && family?.id !== familyId) return false;
       return !selected || selected.has(term.slug);
     }).sort((a, b) => selected ? (searchResult?.matches.findIndex((item) => item.slug === a.slug) ?? 0) - (searchResult?.matches.findIndex((item) => item.slug === b.slug) ?? 0) : 0);
@@ -165,7 +162,7 @@ export default function Home() {
       voiceTimeoutRef.current = setTimeout(() => { if (recorder.state === 'recording') recorder.stop(); }, 60000);
     } catch { setSearchError('无法使用麦克风，请检查权限或改用文字输入。'); }
   };
-  const availableFamilies = termFamilies.filter((item) => filter === 'all' || item.pillar === filter);
+  const availableFamilies = termFamilies.filter((item) => filter === 'all' || (filter === '3d' ? item.slugs.some((slug) => spatialTermSlugs.has(slug)) : item.pillar === filter));
   const reasonFor = (slug: string) => searchResult?.matches.find((item) => item.slug === slug)?.reason;
   const visibleTerms = matches.slice(0, visibleCount);
 
@@ -178,7 +175,6 @@ export default function Home() {
     <div className="marquee-strip" aria-hidden="true"><span>SEE IT ✳ NAME IT ✳ MAKE IT ✳ SEE IT ✳ NAME IT ✳ MAKE IT ✳</span></div>
 
     <section className="explore" id="explore" aria-labelledby="explore-title"><div className="section-heading"><div><span className="eyebrow">THE LIVING INDEX / 01</span><h2 id="explore-title">翻翻这本<br /><em>会动的词典。</em></h2></div></div>
-      <div className="featured-effects"><div className="featured-effects-head"><span>先看效果 ✳</span><p>滚动、3D 和视觉细节，点开卡片看怎么实现。</p></div><div className="featured-effects-grid">{featuredEffects.map((effect) => <Link href={`/terms/${effect.slug}`} className="featured-effect" key={effect.slug}><MotionDemo slug={effect.slug} /><span className="featured-effect-copy"><small>{effect.label}</small><strong>{effect.title}</strong><span>{effect.cue}</span><b aria-hidden="true">↗</b></span></Link>)}</div></div>
 
       <div className="intent-search"><div className="intent-search-head"><span><Icon name="sparkle" size={19} /> 用自己的话找效果</span></div>
         <form className="intent-form" onSubmit={submitSearch}><Icon name="search" size={22} /><textarea value={query} onChange={(event) => setQuery(event.target.value)} maxLength={1200} rows={3} placeholder="例如：我想让首页的图片在往下滑时慢慢出现，背景移动得比文字慢；卡片进入画面后再一个个弹出来……" aria-label="描述你想实现的网页效果" />
