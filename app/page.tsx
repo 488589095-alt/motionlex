@@ -172,7 +172,7 @@ export default function Home() {
 
     <div className="marquee-strip" aria-hidden="true"><span>SEE IT ✳ NAME IT ✳ MAKE IT ✳ SEE IT ✳ NAME IT ✳ MAKE IT ✳</span></div>
 
-    <section className="explore" id="explore" aria-labelledby="explore-title"><div className="section-heading"><div><span className="eyebrow">THE LIVING INDEX / 01</span><h2 id="explore-title">翻翻这本<br /><em>会动的词典。</em></h2></div><p>每张卡片都是一个正在发生的小示例。</p></div>
+    <section className="explore" id="explore" aria-labelledby="explore-title"><div className="section-heading"><div><span className="eyebrow">THE LIVING INDEX / 01</span><h2 id="explore-title">翻翻这本<br /><em>会动的词典。</em></h2></div></div>
 
       <div className="intent-search"><div className="intent-search-head"><span><Icon name="sparkle" size={19} /> 用自己的话找效果</span></div>
         <form className="intent-form" onSubmit={submitSearch}><Icon name="search" size={22} /><textarea value={query} onChange={(event) => setQuery(event.target.value)} maxLength={1200} rows={3} placeholder="例如：我想让首页的图片在往下滑时慢慢出现，背景移动得比文字慢；卡片进入画面后再一个个弹出来……" aria-label="描述你想实现的网页效果" />
