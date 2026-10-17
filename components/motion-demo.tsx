@@ -7,6 +7,7 @@ import { MoreMotionDemo } from './more-motion-demo';
 import { ResearchedMotionDemo } from './researched-motion-demo';
 import { scrolltideTerms } from '../data/scrolltide-terms';
 import { ScrolltideMotionDemo } from './scrolltide-motion-demo';
+import { SemanticMotionDemo } from './semantic-motion-demo';
 
 const titles = new Map(motionTerms.map((term) => [term.slug, term.title]));
 const moreSlugs = new Set(moreTerms.map((term) => term.slug));
@@ -18,6 +19,8 @@ function Picture({ name }: { name: string }) {
 }
 
 function Scene({ slug }: { slug: string }): ReactNode {
+  const semanticScene = SemanticMotionDemo({ slug });
+  if (semanticScene) return semanticScene;
   switch (slug) {
     case 'search-suggest':
       return <div className="demo-search"><div>⌕ &nbsp; <b>滚动</b><i>│</i></div><span>↗ &nbsp; 滚动显现</span><span>↗ &nbsp; 滚动吸附</span><span>↗ &nbsp; 滚动进度</span></div>;

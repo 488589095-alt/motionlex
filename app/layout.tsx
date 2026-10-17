@@ -3,6 +3,7 @@ import './globals.css';
 import './more-demos.css';
 import './researched-demos.css';
 import './scrolltide-demos.css';
+import './semantic-demos.css';
 
 export const metadata: Metadata = {
   title: 'MotionLex · 网页动效与交互术语',
