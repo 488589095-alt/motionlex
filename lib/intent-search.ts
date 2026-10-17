@@ -4,6 +4,15 @@ import { familyFor } from '../data/taxonomy';
 export interface IntentMatch { slug: string; reason: string; score?: number }
 
 const intentRules: { pattern: RegExp; slugs: string[]; reason: string; weight?: number }[] = [
+  { pattern: /滚动.*穿过|滚动.*走进|滑.*进入.*画面|镜头.*穿过/, slugs: ['scroll-portal-walk', 'image-tunnel'], reason: '画面随阅读向前穿行' },
+  { pattern: /立体.*转|3d.*转|模型.*跟.*滚|滚动.*模型/, slugs: ['scroll-3d-pose', 'cylindrical-carousel'], reason: '立体对象随操作改变朝向' },
+  { pattern: /圆筒.*卡|环形.*卡|卡片.*围成.*圈/, slugs: ['cylindrical-carousel', 'orbit-gallery'], reason: '卡片沿立体圆周排列' },
+  { pattern: /手牌|扇形.*卡|照片.*翻堆|照片.*一叠/, slugs: ['fan-deck', 'photo-stack'], reason: '卡片以实体堆叠方式展开' },
+  { pattern: /图片.*隧道|照片.*穿梭|图片.*通道/, slugs: ['image-tunnel'], reason: '图片沿纵深方向连续排列' },
+  { pattern: /网格.*变形|网格.*凹|橡皮布.*鼠标/, slugs: ['mesh-warp', 'grid-warp-text'], reason: '局部网格受到指针影响' },
+  { pattern: /粒子.*地球|点.*地球|星球.*转/, slugs: ['particle-globe'], reason: '由点阵组成的球体持续转动' },
+  { pattern: /玻璃.*竖纹|竖纹.*折射|毛玻璃.*条纹/, slugs: ['fluted-glass'], reason: '竖向玻璃纹路改变图片呈现' },
+  { pattern: /词.*聚焦|文字.*聚焦|一个词.*清楚/, slugs: ['focus-frame-text'], reason: '聚焦框依次让词组清晰' },
   { pattern: /滑动|滚动|往下看|往下翻|下滑/, slugs: ['scroll-reveal', 'scroll-linked'], reason: '与你描述的页面滚动有关', weight: 2 },
   { pattern: /进入视野|滑到.*出现|滚到.*出现|一边滚.*一边出现|往下滑.*出现|慢慢出现|出现.*屏幕/, slugs: ['scroll-reveal', 'view-threshold'], reason: '内容进入屏幕时触发' },
   { pattern: /前景|背景|不同速度|有层次|纵深|景深/, slugs: ['parallax'], reason: '前景和背景移动速度不同' },

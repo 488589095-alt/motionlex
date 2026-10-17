@@ -2,10 +2,11 @@ import type { Metadata } from 'next';
 import './globals.css';
 import './more-demos.css';
 import './researched-demos.css';
+import './scrolltide-demos.css';
 
 export const metadata: Metadata = {
   title: 'MotionLex · 网页动效与交互术语',
-  description: '300 个可视化网页动效与交互术语。看见效果、认识名称，再复制清楚的实现提示与验收要点给 AI。',
+  description: '324 个可视化网页动效与交互术语。看见效果、认识名称，再复制清楚的实现提示与验收要点给 AI。',
   icons: { icon: '/favicon.svg' },
 };
 

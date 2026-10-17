@@ -16,6 +16,11 @@ const filters = [
   { id: 'interaction', label: '交互', icon: 'pointer' },
   { id: 'feedback', label: '内容与反馈', icon: 'book' },
 ];
+const featuredEffects = [
+  { slug: 'scroll-portal-walk', label: '01 / 滚动', title: '往里走，换一幕', cue: '滚动时，镜头穿过画面中央的入口。' },
+  { slug: 'cylindrical-carousel', label: '02 / 3D', title: '卡片转成一个圈', cue: '几张卡片围成立体圆筒，依次来到眼前。' },
+  { slug: 'particle-globe', label: '03 / 视觉', title: '让点组成一颗星球', cue: '点阵缓慢自转，前后层次一眼可见。' },
+];
 
 function Icon({ name, size = 18 }: { name: string; size?: number }) {
   const paths: Record<string, ReactNode> = {
@@ -173,6 +178,7 @@ export default function Home() {
     <div className="marquee-strip" aria-hidden="true"><span>SEE IT ✳ NAME IT ✳ MAKE IT ✳ SEE IT ✳ NAME IT ✳ MAKE IT ✳</span></div>
 
     <section className="explore" id="explore" aria-labelledby="explore-title"><div className="section-heading"><div><span className="eyebrow">THE LIVING INDEX / 01</span><h2 id="explore-title">翻翻这本<br /><em>会动的词典。</em></h2></div></div>
+      <div className="featured-effects"><div className="featured-effects-head"><span>先看效果 ✳</span><p>滚动、3D 和视觉细节，点开卡片看怎么实现。</p></div><div className="featured-effects-grid">{featuredEffects.map((effect) => <Link href={`/terms/${effect.slug}`} className="featured-effect" key={effect.slug}><MotionDemo slug={effect.slug} /><span className="featured-effect-copy"><small>{effect.label}</small><strong>{effect.title}</strong><span>{effect.cue}</span><b aria-hidden="true">↗</b></span></Link>)}</div></div>
 
       <div className="intent-search"><div className="intent-search-head"><span><Icon name="sparkle" size={19} /> 用自己的话找效果</span></div>
         <form className="intent-form" onSubmit={submitSearch}><Icon name="search" size={22} /><textarea value={query} onChange={(event) => setQuery(event.target.value)} maxLength={1200} rows={3} placeholder="例如：我想让首页的图片在往下滑时慢慢出现，背景移动得比文字慢；卡片进入画面后再一个个弹出来……" aria-label="描述你想实现的网页效果" />

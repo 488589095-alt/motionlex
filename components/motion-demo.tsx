@@ -5,10 +5,13 @@ import { moreTerms } from '../data/more-terms';
 import { researchedTerms } from '../data/researched-terms';
 import { MoreMotionDemo } from './more-motion-demo';
 import { ResearchedMotionDemo } from './researched-motion-demo';
+import { scrolltideTerms } from '../data/scrolltide-terms';
+import { ScrolltideMotionDemo } from './scrolltide-motion-demo';
 
 const titles = new Map(motionTerms.map((term) => [term.slug, term.title]));
 const moreSlugs = new Set(moreTerms.map((term) => term.slug));
 const researchedSlugs = new Set(researchedTerms.map((term) => term.slug));
+const scrolltideSlugs = new Set(scrolltideTerms.map((term) => term.slug));
 
 function Picture({ name }: { name: string }) {
   return <span className="demo-picture"><i /><b>{name}</b><em>✦</em></span>;
@@ -135,6 +138,7 @@ function Scene({ slug }: { slug: string }): ReactNode {
     default:
       if (moreSlugs.has(slug)) return <MoreMotionDemo slug={slug} />;
       if (researchedSlugs.has(slug)) return <ResearchedMotionDemo slug={slug} />;
+      if (scrolltideSlugs.has(slug)) return <ScrolltideMotionDemo slug={slug} />;
       return <div className="demo-glow"><i /><span>✳</span><b>TRY THE EFFECT</b></div>;
   }
 }
